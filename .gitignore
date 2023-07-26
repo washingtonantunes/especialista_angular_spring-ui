@@ -59,6 +59,12 @@ local.properties
 .vscode/
 .code-workspace
 
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
 ##############################
 ## OS X
 ##############################
