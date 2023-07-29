@@ -1,23 +1,58 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { MessageModule } from 'primeng/message';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { AppComponent } from './app.component';
-import { LancamentoPesquisaComponent } from './lancamento-pesquisa/lancamento-pesquisa.component';
+import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
+import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
+import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
+import { FormsModule } from '@angular/forms';
+import { MessageComponent } from './message/message.component';
+import { LancamentosGridComponent } from './lancamentos-grid/lancamentos-grid.component';
+import { PessoasGridComponent } from './pessoas-grid/pessoas-grid.component';
 
 @NgModule({
-  declarations: [AppComponent, LancamentoPesquisaComponent, NavbarComponent, PessoasPesquisaComponent],
+  declarations: [
+    AppComponent,
+    LancamentosPesquisaComponent,
+    NavbarComponent,
+    PessoasPesquisaComponent,
+    LancamentoCadastroComponent,
+    PessoaCadastroComponent,
+    MessageComponent,
+    LancamentosGridComponent,
+    PessoasGridComponent,
+  ],
   imports: [
     BrowserModule,
-    InputTextModule,
+    BrowserAnimationsModule,
+    FormsModule,
     ButtonModule,
+    CalendarModule,
+    DropdownModule,
+    InputMaskModule,
+    InputNumberModule,
+    InputTextModule,
+    InputTextareaModule,
+    MessageModule,
+    SelectButtonModule,
     TableModule,
+    TabViewModule,
     TooltipModule,
   ],
   providers: [],

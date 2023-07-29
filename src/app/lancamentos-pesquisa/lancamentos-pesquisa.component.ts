@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-lancamento-pesquisa',
-  templateUrl: './lancamento-pesquisa.component.html',
-  styleUrls: ['./lancamento-pesquisa.component.css'],
+  selector: 'app-lancamentos-pesquisa',
+  templateUrl: './lancamentos-pesquisa.component.html',
+  styleUrls: ['./lancamentos-pesquisa.component.css'],
 })
-export class LancamentoPesquisaComponent {
+export class LancamentosPesquisaComponent {
   lancamentos = [
     {
       tipo: 'DESPESA',
