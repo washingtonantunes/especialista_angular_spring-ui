@@ -33,4 +33,16 @@ export class PessoasGridComponent {
   alternarStatus(pessoa: any) {
     this.alternarStatusEvent.emit(pessoa);
   }
+
+  getEstilosAtivo(ativo: boolean) {
+    return {
+      color: 'white',
+      textDecoration: 'none',
+      backgroundColor: ativo ? '#5cb85c' : '#d9534f',
+      padding: '2px 12px',
+      textAlign: 'center',
+      display: 'inline-block',
+      borderRadius: '1em',
+    };
+  }
 }

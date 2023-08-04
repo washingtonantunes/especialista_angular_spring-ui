@@ -57,22 +57,6 @@ export class LancamentoService {
         params,
       })
     );
-    /*return this.http
-      .get<Page<Lancamento>>(`${this.lancamentosUrl}?resumo`, {
-        headers,
-        params,
-      })
-      .toPromise()
-      .then((response: any) => {
-        const lancamentos = response['content'];
-
-        const resultado = {
-          lancamentos,
-          total: response['totalElements'],
-        };
-
-        return resultado;
-      });*/
   }
 
   excluir(codigo: number): Promise<void> {
@@ -95,8 +79,55 @@ export class LancamentoService {
     return firstValueFrom(
       this.http.post<Lancamento>(this.lancamentosUrl, lancamento, { headers })
     );
-    /*return this.http
-      .post<Lancamento>(this.lancamentosUrl, lancamento, { headers })
-      .toPromise();*/
+  }
+
+  atualizar(lancamento: Lancamento): Promise<Lancamento> {
+    const headers = new HttpHeaders().append(
+      'Authorization',
+      'Basic YWRtaW5Ad3RpLmNvbTphZG1pbg=='
+    );
+
+    return firstValueFrom(
+      this.http.put<Lancamento>(
+        `${this.lancamentosUrl}/${lancamento.codigo}`,
+        lancamento,
+        { headers }
+      )
+    ).then((response: any) => {
+      this.converterStringsParaDatas([response]);
+
+      return response;
+    });
+  }
+
+  buscarPorCodigo(codigo: number): Promise<Lancamento> {
+    const headers = new HttpHeaders().append(
+      'Authorization',
+      'Basic YWRtaW5Ad3RpLmNvbTphZG1pbg=='
+    );
+
+    return firstValueFrom(
+      this.http.get<Lancamento>(`${this.lancamentosUrl}/${codigo}`, { headers })
+    ).then((response: any) => {
+      this.converterStringsParaDatas([response]);
+
+      return response;
+    });
+  }
+
+  private converterStringsParaDatas(lancamentos: Lancamento[]) {
+    for (const lancamento of lancamentos) {
+      let offset = new Date().getTimezoneOffset() * 60000;
+
+      lancamento.dataVencimento = new Date(
+        new Date(lancamento.dataVencimento!).getTime() + offset
+      );
+
+      if (lancamento.dataPagamento) {
+        lancamento.dataPagamento = new Date(
+          new Date(lancamento.dataPagamento).getTime() + offset
+        );
+      }
+    }
   }
 }
