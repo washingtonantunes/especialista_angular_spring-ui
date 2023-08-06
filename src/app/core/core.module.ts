@@ -19,6 +19,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ErrorHandlerService } from './error-handler.service';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
+import { AuthService } from '../seguranca/auth.service';
+import { NaoAutorizadoComponent } from './nao-autorizado/nao-autorizado.component';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -27,7 +29,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [NavbarComponent, PaginaNaoEncontradaComponent],
+  declarations: [NavbarComponent, PaginaNaoEncontradaComponent, NaoAutorizadoComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -48,6 +50,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MessageService,
     ConfirmationService,
     TranslateService,
+    AuthService,
   ],
 })
 export class CoreModule {}

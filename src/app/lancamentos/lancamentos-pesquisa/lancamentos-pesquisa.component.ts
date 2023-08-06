@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import {
   ConfirmationService,
@@ -8,7 +9,7 @@ import {
 
 import { LancamentoFiltro, LancamentoService } from '../lancamento.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { Title } from '@angular/platform-browser';
+import { AuthService } from 'src/app/seguranca/auth.service';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -21,6 +22,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   lancamentos: any[] = [];
 
   constructor(
+    private auth: AuthService,
     private lancamentoService: LancamentoService,
     private messageService: MessageService,
     private errorHandler: ErrorHandlerService,
@@ -70,5 +72,9 @@ export class LancamentosPesquisaComponent implements OnInit {
         });
       })
       .catch((erro) => this.errorHandler.handle(erro));
+  }
+
+  naoTemPermissao(permissao: string) {
+    return !this.auth.temPermissao(permissao);
   }
 }

@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 
+import { AuthService } from 'src/app/seguranca/auth.service';
+
 @Component({
   selector: 'app-pessoas-grid',
   templateUrl: './pessoas-grid.component.html',
@@ -15,7 +17,10 @@ export class PessoasGridComponent {
   @Output() excluirEvent = new EventEmitter();
   @Output() alternarStatusEvent = new EventEmitter();
 
-  constructor(private confirmationService: ConfirmationService) {}
+  constructor(
+    private auth: AuthService,
+    private confirmationService: ConfirmationService
+  ) {}
 
   aoMudarPagina(event: LazyLoadEvent) {
     this.lazyLoadEvent.emit(event);
@@ -44,5 +49,9 @@ export class PessoasGridComponent {
       display: 'inline-block',
       borderRadius: '1em',
     };
+  }
+
+  naoTemPermissao(permissao: string) {
+    return !this.auth.temPermissao(permissao);
   }
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -10,11 +10,6 @@ export class CategoriaService {
   constructor(private http: HttpClient) {}
 
   listarTodas(): Promise<any> {
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Basic YWRtaW5Ad3RpLmNvbTphZG1pbg=='
-    );
-
-    return this.http.get(this.categoriasUrl, { headers }).toPromise();
+    return this.http.get(this.categoriasUrl).toPromise();
   }
 }

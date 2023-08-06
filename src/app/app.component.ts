@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { PrimeNGConfig } from 'primeng/api';
 
@@ -12,7 +13,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent implements OnInit {
   constructor(
     private config: PrimeNGConfig,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -20,5 +22,9 @@ export class AppComponent implements OnInit {
     this.translateService
       .get('primeng')
       .subscribe((res) => this.config.setTranslation(res));
+  }
+
+  exibindoNavbar() {
+    return this.router.url !== '/login';
   }
 }

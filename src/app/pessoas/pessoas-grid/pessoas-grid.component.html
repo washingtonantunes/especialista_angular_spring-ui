@@ -26,19 +26,25 @@
             <span class="p-column-title">Estado</span>
             {{ pessoa.estado }}
           </td>
-          <td>
+          <td *ngIf="naoTemPermissao('ROLE_CADASTRAR_PESSOA'); else podeExcluir">
             <span class="p-column-title">Status</span>
-            <a href="javascript:;" [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'" tooltipPosition="top"
-              (click)="alternarStatus(pessoa)" [ngStyle]="getEstilosAtivo(pessoa.ativo)">
-              {{ pessoa.ativo ? 'Ativo' : 'Inativo' }}
-            </a>
+            {{ pessoa.ativo ? 'Ativo' : 'Inativo' }}
           </td>
+          <ng-template #podeExcluir>
+            <td>
+              <span class="p-column-title">Status</span>
+              <a href="javascript:;" [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'" tooltipPosition="top"
+                (click)="alternarStatus(pessoa)" [ngStyle]="getEstilosAtivo(pessoa.ativo)">
+                {{ pessoa.ativo ? 'Ativo' : 'Inativo' }}
+              </a>
+            </td>
+          </ng-template>
           <td class="col-acoes">
             <span class="p-column-title"></span>
             <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"
               [routerLink]="['/pessoas', pessoa.codigo]"></a>
             <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"
-              (click)="confirmarExclusao(pessoa)"></button>
+              (click)="confirmarExclusao(pessoa)" [disabled]="naoTemPermissao('ROLE_REMOVER_PESSOA')"></button>
           </td>
         </tr>
       </ng-template>
