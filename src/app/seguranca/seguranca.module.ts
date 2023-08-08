@@ -11,6 +11,7 @@ import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { MoneyHttpInterceptor } from './money-http-interceptor';
+import { environment } from 'src/environments/environment';
 
 export function tokenGetter(): string {
   return localStorage.getItem('token')!;
@@ -24,8 +25,8 @@ export function tokenGetter(): string {
     JwtModule.forRoot({
       config: {
         tokenGetter,
-        allowedDomains: ['localhost:8080'],
-        disallowedRoutes: ['http://localhost:8080/oauth/token'],
+        allowedDomains: environment.tokenAllowedDomains,
+        disallowedRoutes: environment.tokenDisallowedRoutes,
       },
     }),
     InputTextModule,

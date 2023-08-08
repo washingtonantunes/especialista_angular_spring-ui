@@ -6,6 +6,7 @@ import { firstValueFrom } from 'rxjs';
 
 import { Page } from '../core/model/page';
 import { Lancamento } from '../core/model/lancamento';
+import { environment } from 'src/environments/environment';
 
 export class LancamentoFiltro {
   descricao?: string;
@@ -19,9 +20,11 @@ export class LancamentoFiltro {
   providedIn: 'root',
 })
 export class LancamentoService {
-  lancamentosUrl = 'http://localhost:8080/lancamentos';
+  lancamentosUrl: string;
 
-  constructor(private http: HttpClient, private datePipe: DatePipe) {}
+  constructor(private http: HttpClient, private datePipe: DatePipe) {
+    this.lancamentosUrl = `${environment.apiUrl}/lancamentos`;
+  }
 
   pesquisar(filtro: LancamentoFiltro): Promise<Page<Lancamento>> {
     let params = new HttpParams()
