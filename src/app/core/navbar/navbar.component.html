@@ -11,10 +11,19 @@
 
   <ul class="navbar-menu" [hidden]="!exibindoMenu">
     <li class="navbar-usuario">{{ usuarioLogado }}</li>
+
     <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="temPermissao('ROLE_PESQUISAR_LANCAMENTO')"><a
-        routerLink="/lancamentos">Lançamentos</a></li>
+        routerLink="/dashboard" (click)="exibindoMenu = !exibindoMenu">Dashboard</a></li>
+
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="temPermissao('ROLE_PESQUISAR_LANCAMENTO')"><a
+        routerLink="/lancamentos" (click)="exibindoMenu = !exibindoMenu">Lançamentos</a></li>
+
     <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="temPermissao('ROLE_PESQUISAR_PESSOA')"><a
-        routerLink="/pessoas">Pessoas</a></li>
+        routerLink="/pessoas" (click)="exibindoMenu = !exibindoMenu">Pessoas</a></li>
+
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="temPermissao('ROLE_PESQUISAR_LANCAMENTO')"><a
+        routerLink="/relatorios/lancamentos" (click)="exibindoMenu = !exibindoMenu">Relatório</a></li>
+
     <li class="navbar-menuitem"><a href="#" (click)="logout()">Logout</a></li>
   </ul>
 

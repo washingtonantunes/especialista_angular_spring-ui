@@ -22,15 +22,17 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./lancamento-cadastro.component.css'],
 })
 export class LancamentoCadastroComponent implements OnInit {
+  tipos = [
+    { label: 'Receita', value: 'RECEITA' },
+    { label: 'Despesa', value: 'DESPESA' },
+  ];
+
   formulario!: FormGroup;
 
   categorias: any[] = [];
   pessoas: any[] = [];
 
-  tipos = [
-    { label: 'Receita', value: 'RECEITA' },
-    { label: 'Despesa', value: 'DESPESA' },
-  ];
+  uploadEmAndamento = false;
 
   constructor(
     private categoriaService: CategoriaService,
@@ -59,6 +61,52 @@ export class LancamentoCadastroComponent implements OnInit {
     this.carregarPessoas();
   }
 
+  antesUploadAnexo() {
+    this.uploadEmAndamento = true;
+  }
+
+  aoTerminarUploadAnexo(event: any) {
+    const anexo = event.originalEvent.body;
+    this.formulario.patchValue({
+      anexo: anexo.nome,
+      urlAnexo: anexo.url.replace('\\\\', 'https://'),
+    });
+    this.uploadEmAndamento = false;
+  }
+
+  erroUpload(event: any) {
+    this.messageService.add({
+      severity: 'error',
+      detail: 'Erro ao tentar enviar anexo!',
+    });
+    this.uploadEmAndamento = false;
+  }
+
+  removerAnexo() {
+    this.formulario.patchValue({
+      anexo: null,
+      urlAnexo: null,
+    });
+  }
+
+  get nomeAnexo() {
+    const nome = this.formulario?.get('anexo')?.value;
+
+    if (nome) {
+      return nome.substring(nome.indexOf('_') + 1, nome.length);
+    }
+
+    return '';
+  }
+
+  get urlUploadAnexo() {
+    return this.lancamentoService.urlUploadAnexo();
+  }
+
+  get uploadHeaders() {
+    return this.lancamentoService.uploadHeaders();
+  }
+
   configurarFormulario() {
     this.formulario = this.formBuilder.group({
       codigo: [],
@@ -79,6 +127,8 @@ export class LancamentoCadastroComponent implements OnInit {
         nome: [],
       }),
       observacao: [],
+      anexo: [],
+      urlAnexo: [],
     });
   }
 
@@ -103,6 +153,14 @@ export class LancamentoCadastroComponent implements OnInit {
       .buscarPorCodigo(codigo)
       .then((lancamento) => {
         this.formulario.patchValue(lancamento);
+
+        if (this.formulario.get('urlAnexo')?.value)
+          this.formulario.patchValue({
+            urlAnexo: this.formulario
+              .get('urlAnexo')
+              ?.value.replace('\\\\', 'https://'),
+          });
+
         this.atualizarTituloEdicao();
       })
       .catch((erro) => this.errorHandler.handle(erro));

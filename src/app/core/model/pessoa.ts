@@ -1,3 +1,11 @@
+export class Pessoa {
+  codigo?: number;
+  nome?: string;
+  endereco = new Endereco();
+  ativo = true;
+  contatos = new Array<Contato>();
+}
+
 export class Endereco {
   logradouro?: string;
   numero?: string;
@@ -8,9 +16,9 @@ export class Endereco {
   estado?: string;
 }
 
-export class Pessoa {
+export class Contato {
   codigo?: number;
   nome?: string;
-  endereco = new Endereco();
-  ativo = true;
+  email?: string;
+  telefone?: string;
 }

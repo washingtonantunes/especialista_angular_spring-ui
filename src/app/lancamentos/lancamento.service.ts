@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { firstValueFrom } from 'rxjs';
@@ -24,6 +24,17 @@ export class LancamentoService {
 
   constructor(private http: HttpClient, private datePipe: DatePipe) {
     this.lancamentosUrl = `${environment.apiUrl}/lancamentos`;
+  }
+
+  urlUploadAnexo(): string {
+    return `${this.lancamentosUrl}/anexo`;
+  }
+
+  uploadHeaders() {
+    return new HttpHeaders().append(
+      'Authorization',
+      'Bearer ' + localStorage.getItem('token')
+    );
   }
 
   pesquisar(filtro: LancamentoFiltro): Promise<Page<Lancamento>> {
